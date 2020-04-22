@@ -17,12 +17,19 @@ public class SendEmail {
      */
     public void sendEmail(String to, String from, String host, String subject, String userMessage, String username, String password) {
 
+        /**
+         * Add all necessary properties to connect to email server
+         */
         Properties properties = new Properties();
         properties.put("mail.smtp.host", host);
         properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true"); //TLS
 
+        /**
+         * Add authentication object to authenticate connection with username and password
+         *
+         */
         Session session = Session.getInstance(properties,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
@@ -30,8 +37,10 @@ public class SendEmail {
                     }
                 });
 
+        /**
+         * Create message to send and define recipients to receive
+         */
         try {
-
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));
             message.setRecipients(
